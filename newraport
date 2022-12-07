@@ -15,7 +15,7 @@ struct Mahasiswa{
     unsigned int id;
     unsigned int niu;
     unsigned int rank;
-    int sks[9] = {3, 3, 3, 3, 2, 2, 2, 2, 1};
+    short sks[9] = {3, 3, 3, 3, 2, 2, 2, 2, 1};
     float nilai[9];
     float nilaiSks[9];
     float ipkMatkul[9];
@@ -27,17 +27,16 @@ int getOption();
 void inputData(ofstream &myFile, int &idmhs);
 void writeData(ofstream &myFile, Mahasiswa &mahasiswa);
 void readData(ifstream &inputFile, Mahasiswa mahasiswa[], int &jumlah);
-void tampilkanDataMahasiswa(Mahasiswa mahasiswa[], int &jumlah);
+void printRank(Mahasiswa mahasiswa[], int &jumlah);
+void printRapot(Mahasiswa mahasiswa[], int &jumlah);
 int cariJumlah(ifstream &inputFile);
 int idAkhir(ifstream &inputFile);
-void updateData(ofstream &outputFile, int jumlah, Mahasiswa mahasiswa[]);
 void deleteData(ofstream &outputFile, int jumlah, Mahasiswa mahasiswa[]);
 void deleteAll(ofstream &outputFile);
 bool compareRank(Mahasiswa a, Mahasiswa b);
 bool compareId(Mahasiswa a, Mahasiswa b);
 void searchRank(Mahasiswa mahasiswa[], int &jumlah);
 int searchNiu(Mahasiswa mahasiswa[], int &jumlah);
-void rapot(Mahasiswa mahasiswa[], int &jumlah);
 
 
 int main(){
@@ -58,26 +57,20 @@ int main(){
             inputData(outputFile, idmhs);
             break;
         case 2:
-            tampilkanDataMahasiswa(mahasiswa, jumlah);
+            printRank(mahasiswa, jumlah);
             break;
         case 3:
-            rapot(mahasiswa, jumlah);
+            printRapot(mahasiswa, jumlah);
             break;
         case 4:
             searchRank(mahasiswa, jumlah);
             break;
         case 5:
-            cout << "Ubah data" << endl;
-            //deleteAll(outputFile);
-            //updateData(outputFile, jumlah, mahasiswa);
-            break;
-        case 6:
             int hapusPilih;
             cout << "Hapus data" << endl;
             cout << "1.Hapus satu berdasarkan id" << endl;
             cout << "2.Reset" << endl;
             cin >> hapusPilih;
-            //void updateData(ofstream &outputFile, int id, int jumlah, Mahasiswa mahasiswa[]);
             deleteAll(outputFile);
             if(hapusPilih==2){
                 cout << "Database telah berhasil direset" << endl;
@@ -91,7 +84,7 @@ int main(){
         default:
             cout << "Perintah tidak dikenali" << endl;
     }
-    cout << endl << "Apakah ingin exit program [y/n]" << endl;
+    cout << endl << "Apakah Anda ingin exit program? [y/n]" << endl;
     cin >> is_continue;
     if(is_continue == 'n'){
         goto pilihOpsi;
@@ -111,9 +104,8 @@ int getOption(){
     cout << "2.Tampilkan rangking" << endl;
     cout << "3.Tampilkan rapot" << endl;
     cout << "4.Cari data" << endl;
-    cout << "5.Ubah data" << endl;
-    cout << "6.Hapus data" << endl;
-    cout << "Pilih [1-6]: ";
+    cout << "5.Hapus data" << endl;
+    cout << "Pilih [1-5]: ";
     cin >> opsi;
     cout << endl;
     cin.ignore();
@@ -218,7 +210,7 @@ void readData(ifstream &inputFile, Mahasiswa mahasiswa[], int &jumlah){
 	}
 }
 
-void tampilkanDataMahasiswa(Mahasiswa mahasiswa[], int &jumlah){
+void printRank(Mahasiswa mahasiswa[], int &jumlah){
     sort(mahasiswa, mahasiswa+jumlah, compareRank);
     cout<<"PEMERINGKATAN MAHASISWA CS UGM SEMESTER GASAL 2022/2023"<<endl;
 	cout<<"_______________________________________________________ \n\n";
@@ -344,7 +336,7 @@ void deleteData(ofstream &outputFile, int jumlah, Mahasiswa mahasiswa[]){
     int id;
     cout << "Input id: ";
     cin >> id;
-    for(int i=0;i<jumlah;i++){
+    for(int i=0;i<jumlah;i++){x
         if(id!=mahasiswa[i].id){
             writeData(outputFile, mahasiswa[i]);            
         }
@@ -405,7 +397,7 @@ void searchRank(Mahasiswa mahasiswa[], int &jumlah){
         <<"Permintaan Anda melampaui jumlah mahasiswa yang ada di CS UGM 2022/2023";
 }
 
-void rapot(Mahasiswa mahasiswa[], int &jumlah){
+void printRapot(Mahasiswa mahasiswa[], int &jumlah){
     int j = searchNiu(mahasiswa, jumlah);
 	system("clear");
 	cout << "\t\t\t   KARTU HASIL STUDI" << endl;
