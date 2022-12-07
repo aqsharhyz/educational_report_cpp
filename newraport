@@ -211,24 +211,25 @@ void readData(ifstream &inputFile, Mahasiswa mahasiswa[], int &jumlah){
 void printRank(Mahasiswa mahasiswa[], int &jumlah){
     sort(mahasiswa, mahasiswa+jumlah, compareRank);
     cout<<"PEMERINGKATAN MAHASISWA CS UGM SEMESTER GASAL 2022/2023"<<endl;
-	cout<<"_______________________________________________________ \n\n";
-	cout<<"Rank   ";
-	cout<<"Nama \t"<<setw(10);
-	cout<<"Program Studi \t"<<setw(7);
-	cout<<"NIU \t"<<setw(5);
-	cout<<"IPK";
-	cout<<endl;
-	
-	for (int i=0; i<jumlah; i++){
-		cout<<setw(3);
-		cout<<mahasiswa[i].rank<<"   ";
-		cout<<mahasiswa[i].nama<<"\t"<<setw(10);
-		cout<<mahasiswa[i].prodi<<setw(10);
-		cout<<mahasiswa[i].niu << "\t" <<setw(5);
-		cout<<mahasiswa[i].ipk;
-		cout<<endl;
-	}
+	cout<<"_______________\n\n";
+    cout<<"Rank\t";
+    cout<<"Nama\t\t";
+    cout<<"Program Studi\t\t";
+    cout<<"NIU\t";
+    cout<<"IPK";
+    cout<<endl;
+    
+    for (int i=0; i<jumlah; i++){
+    cout<<setw(3);
+    cout<<mahasiswa[i].rank<<"\t";
+    cout<<mahasiswa[i].namaAwal<<"\t\t";
+    cout<<mahasiswa[i].prodi << "\t";
+    cout<<mahasiswa[i].niu << "\t";
+    cout<<mahasiswa[i].ipk;
+    cout<<endl;
+    }
     cout << "Jumlah mahasiswa: " << jumlah << endl;
+    
 }
 
 void inputData(ofstream &outputFile, int &idmhs){
@@ -340,7 +341,7 @@ void deleteData(ofstream &outputFile, int jumlah, Mahasiswa mahasiswa[]){
 
 void deleteAll(ofstream &outputFile){
     outputFile.close();
-    usleep(500000); //sleeps for 0.5 second
+    //usleep(500000); //sleeps for 0.5 second
     outputFile.open("data.txt", ios::trunc);
 }
 
