@@ -7,7 +7,7 @@
 using namespace std;
 
 struct Mahasiswa{
-    string namaAwal, namaTengah, namaAkhir, nama;
+    string namaAwal, namaAkhir, nama;
     string prodi = "S1 Ilmu Komputer";
     string semester = "Semester 1";
     string matkul[9]= {"Fisika Dasar 1","Kimia Dasar 1","Pemrograman","Kalkulus 1","Agama","Bahasa Indonesia","Aljabar Linear","Logika Informatika","Prak Pemrograman"};
@@ -84,7 +84,7 @@ int main(){
         default:
             cout << "Perintah tidak dikenali" << endl;
     }
-    cout << endl << "Apakah Anda ingin exit program? [y/n]" << endl;
+    cout << endl << "Apakah Anda ingin exit program? [y/n]  ";
     cin >> is_continue;
     if(is_continue == 'n'){
         goto pilihOpsi;
@@ -118,7 +118,7 @@ void readData(ifstream &inputFile, Mahasiswa mahasiswa[], int &jumlah){
         float jumlahNilaiSks=0;
         int jumlahSks=21;
         inputFile >> mahasiswa[i].id;
-        for(int j=0;j<3;j++){
+        for(int j=0;j<2;j++){
             inputFile >> buffer;
             if(buffer!="-"){
                 mahasiswa[i].nama += buffer + " ";
@@ -126,8 +126,6 @@ void readData(ifstream &inputFile, Mahasiswa mahasiswa[], int &jumlah){
             if(j==0){
                 mahasiswa[i].namaAwal = buffer;
             } else if(j==1){
-                mahasiswa[i].namaTengah = buffer;
-            } else if(j==2){
                 mahasiswa[i].namaAkhir = buffer;
             }
         }
@@ -246,8 +244,6 @@ void inputData(ofstream &outputFile, int &idmhs){
         cout << "ID Mahasiswa: " << mahasiswa[i].id << endl;
         cout << "Input nama depan mahasiswa: ";
         cin >> mahasiswa[i].namaAwal;
-        cout << "Input nama tengah (Apabila tidak ada isi dengan \"-\"): ";
-        cin >> mahasiswa[i].namaTengah;
         cout << "Input nama belakang (Apabila tidak ada isi dengan \"-\"): ";
         cin >> mahasiswa[i].namaAkhir;
         cout << "Input NIU mahasiswa: ";
@@ -280,7 +276,6 @@ void inputData(ofstream &outputFile, int &idmhs){
 void writeData(ofstream &outputFile, Mahasiswa &mahasiswa){
     outputFile << mahasiswa.id << "\t";
     outputFile << mahasiswa.namaAwal << "\t";
-    outputFile << mahasiswa.namaTengah << "\t";    
     outputFile << mahasiswa.namaAkhir << "\t";      
     outputFile << mahasiswa.niu << "\t";
     outputFile << mahasiswa.nilai[0] << "\t";
@@ -336,7 +331,7 @@ void deleteData(ofstream &outputFile, int jumlah, Mahasiswa mahasiswa[]){
     int id;
     cout << "Input id: ";
     cin >> id;
-    for(int i=0;i<jumlah;i++){x
+    for(int i=0;i<jumlah;i++){
         if(id!=mahasiswa[i].id){
             writeData(outputFile, mahasiswa[i]);            
         }
