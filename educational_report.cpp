@@ -97,7 +97,7 @@ int main(){
 
 int getOption(){
     int opsi;
-    system("clear");
+    system("cls");
     cout << "Welcome" << endl << endl;
     cout << "Pilih program" << endl;
     cout << "1.Input mahasiswa" << endl;
@@ -208,29 +208,6 @@ void readData(ifstream &inputFile, Mahasiswa mahasiswa[], int &jumlah){
 	}
 }
 
-void printRank(Mahasiswa mahasiswa[], int &jumlah){
-    sort(mahasiswa, mahasiswa+jumlah, compareRank);
-    cout<<"PEMERINGKATAN MAHASISWA CS UGM SEMESTER GASAL 2022/2023"<<endl;
-	cout<<"_______________\n\n";
-    cout<<"Rank\t";
-    cout<<"Nama\t\t";
-    cout<<"Program Studi\t\t";
-    cout<<"NIU\t";
-    cout<<"IPK";
-    cout<<endl;
-    
-    for (int i=0; i<jumlah; i++){
-    cout<<setw(3);
-    cout<<mahasiswa[i].rank<<"\t";
-    cout<<mahasiswa[i].namaAwal<<"\t\t";
-    cout<<mahasiswa[i].prodi << "\t";
-    cout<<mahasiswa[i].niu << "\t";
-    cout<<mahasiswa[i].ipk;
-    cout<<endl;
-    }
-    cout << "Jumlah mahasiswa: " << jumlah << endl;
-    
-}
 
 void inputData(ofstream &outputFile, int &idmhs){
     int n;
@@ -317,17 +294,6 @@ int idAkhir(ifstream &inputFile){
     return id;
 }
 
-void updateData(ofstream &outputFile, int jumlah, Mahasiswa mahasiswa[]){
-    int id;
-    cin >> id;
-    sort(mahasiswa, mahasiswa+jumlah, compareId);
-    for(int i=0;i<jumlah;i++){
-        if(id!=mahasiswa[i].id){
-            writeData(outputFile, mahasiswa[i]);            
-        }
-    }
-}
-
 void deleteData(ofstream &outputFile, int jumlah, Mahasiswa mahasiswa[]){
     int id;
     cout << "Input id: ";
@@ -341,8 +307,56 @@ void deleteData(ofstream &outputFile, int jumlah, Mahasiswa mahasiswa[]){
 
 void deleteAll(ofstream &outputFile){
     outputFile.close();
-    //usleep(500000); //sleeps for 0.5 second
     outputFile.open("data.txt", ios::trunc);
+}
+
+void printRapot(Mahasiswa mahasiswa[], int &jumlah){
+    int j = searchNiu(mahasiswa, jumlah);
+	system("cls");
+	cout << "\t\t\t   KARTU HASIL STUDI" << endl;
+	cout << "\t\t\tSemester Gasal 2022/2023" << endl;
+	cout << "\nNama\t: " << mahasiswa[j].nama;
+	cout << "\t\t\tIP Semester  : " << mahasiswa[j].ipk << endl;
+	cout << "NIU\t: " << mahasiswa[j].niu << endl;
+	cout << "Prodi\t: S1 ILMU KOMPUTER\n\n";
+	cout << "No\t| Mata Kuliah\t\t| SKS\t| Nilai\t| Bobot\t| Nilai SKS |" << endl;
+	cout << "--------------------------------------------------------------------" << endl;
+	for(int i=0; i<9; i++){
+		cout << i+1 << "\t| ";
+		if(i==1||i==2||i==3) cout << mahasiswa[j].matkul[i] << "\t\t| ";
+		else if(i==4) cout << mahasiswa[j].matkul[i] << "\t\t\t| ";
+		else cout << mahasiswa[j].matkul[i] << "\t| ";
+		cout << mahasiswa[j].sks[i] << "\t| ";
+		cout << mahasiswa[j].grade[i] << "\t| ";
+		cout << mahasiswa[j].ipkMatkul[i] << "\t| ";
+		cout << mahasiswa[j].nilaiSks[i] << endl;
+	}
+	cout << "--------------------------------------------------------------------" << endl;
+	cout << "\t\t\t\t\tJumlah nilai\t| " << mahasiswa[j].totalNilai << endl;
+}
+
+void printRank(Mahasiswa mahasiswa[], int &jumlah){
+    sort(mahasiswa, mahasiswa+jumlah, compareRank);
+    cout<<"PEMERINGKATAN MAHASISWA CS UGM SEMESTER GASAL 2022/2023"<<endl;
+	cout<<"_______________________________________________________\n\n";
+    cout<<"Rank\t";
+    cout<<"Nama\t\t";
+    cout<<"Program Studi\t\t";
+    cout<<"NIU\t";
+    cout<<"IPK";
+    cout<<endl;
+    
+    for (int i=0; i<jumlah; i++){
+    cout<<setw(3);
+    cout<<mahasiswa[i].rank<<"\t";
+    cout<<mahasiswa[i].namaAwal<<"\t\t";
+    cout<<mahasiswa[i].prodi << "\t";
+    cout<<mahasiswa[i].niu << "\t";
+    cout<<mahasiswa[i].ipk;
+    cout<<endl;
+    }
+    cout << "Jumlah mahasiswa: " << jumlah << endl;
+    
 }
 
 bool compareRank(Mahasiswa a, Mahasiswa b){
@@ -389,34 +403,12 @@ void searchRank(Mahasiswa mahasiswa[], int &jumlah){
         }
     }
     
-    cout<<"Data mahasiswa tidak ditemukan."
-        <<"Permintaan Anda melampaui jumlah mahasiswa yang ada di CS UGM 2022/2023";
+    if(left>right){
+        cout<<"Data mahasiswa tidak ditemukan."
+            <<"Permintaan Anda melampaui jumlah mahasiswa yang ada di CS UGM 2022/2023";
+    }
 }
 
-void printRapot(Mahasiswa mahasiswa[], int &jumlah){
-    int j = searchNiu(mahasiswa, jumlah);
-	system("clear");
-	cout << "\t\t\t   KARTU HASIL STUDI" << endl;
-	cout << "\t\t\tSemester Gasal 2022/2023" << endl;
-	cout << "\nNama\t: " << mahasiswa[j].nama;
-	cout << "\t\t\tIP Semester  : " << mahasiswa[j].ipk << endl;
-	cout << "NIU\t: " << mahasiswa[j].niu << endl;
-	cout << "Prodi\t: S1 ILMU KOMPUTER\n\n";
-	cout << "No\t| Mata Kuliah\t\t| SKS\t| Nilai\t| Bobot\t| Nilai SKS |" << endl;
-	cout << "--------------------------------------------------------------------" << endl;
-	for(int i=0; i<9; i++){
-		cout << i+1 << "\t| ";
-		if(i==1||i==2||i==3) cout << mahasiswa[j].matkul[i] << "\t\t| ";
-		else if(i==4) cout << mahasiswa[j].matkul[i] << "\t\t\t| ";
-		else cout << mahasiswa[j].matkul[i] << "\t| ";
-		cout << mahasiswa[j].sks[i] << "\t| ";
-		cout << mahasiswa[j].grade[i] << "\t| ";
-		cout << mahasiswa[j].ipkMatkul[i] << "\t| ";
-		cout << mahasiswa[j].nilaiSks[i] << endl;
-	}
-	cout << "--------------------------------------------------------------------" << endl;
-	cout << "\t\t\t\t\tJumlah nilai\t| " << mahasiswa[j].totalNilai << endl;
-}
 
 int searchNiu(Mahasiswa mahasiswa[], int &jumlah){
     int target, mid;
